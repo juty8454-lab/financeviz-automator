@@ -5,6 +5,30 @@ export default function Home() {
   const [script, setScript] = useState("");
   const [fileName, setFileName] = useState<string | null>(null);
   const [style, setStyle] = useState<"ai" | "stock">("stock");
+  const [status, setStatus] = useState<"idle" | "working" | "done">("idle");
+  const [stepText, setStepText] = useState("");
+
+  const steps = [
+    "Transcribing audio…",
+    "Matching keywords to visuals…",
+    "Syncing timing…",
+    "Rendering timeline…",
+  ];
+
+  function generate() {
+    setStatus("working");
+    let i = 0;
+    setStepText(steps[0]);
+    const interval = setInterval(() => {
+      i++;
+      if (i < steps.length) {
+        setStepText(steps[i]);
+      } else {
+        clearInterval(interval);
+        setStatus("done");
+      }
+    }, 900);
+  }
 
   return (
     <main className="min-h-screen bg-white text-gray-900 flex justify-center">
@@ -61,12 +85,38 @@ export default function Home() {
           </div>
         </div>
 
-        <button
-          disabled={!script || !fileName}
-          className="mt-8 w-full py-4 rounded-xl bg-gray-900 text-white font-semibold disabled:opacity-40"
-        >
-          Generate Video
-        </button>
+        {status === "idle" && (
+          <button
+            disabled={!script || !fileName}
+            onClick={generate}
+            className="mt-8 w-full py-4 rounded-xl bg-gray-900 text-white font-semibold disabled:opacity-40"
+          >
+            Generate Video
+          </button>
+        )}
+
+        {status === "working" && (
+          <div className="mt-8 text-center">
+            <div className="text-sm text-gray-500">{stepText}</div>
+            <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-red-500 animate-pulse w-2/3" />
+            </div>
+          </div>
+        )}
+
+        {status === "done" && (
+          <div className="mt-8">
+            <div className="bg-gray-50 rounded-xl aspect-video flex items-center justify-center text-gray-400 text-sm">
+              Video preview (coming in the next step)
+            </div>
+            <button
+              onClick={() => setStatus("idle")}
+              className="mt-4 w-full py-4 rounded-xl border-2 border-gray-900 font-semibold"
+            >
+              Start New Project
+            </button>
+          </div>
+        )}
       </div>
     </main>
   );
