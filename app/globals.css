@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes draw {
+  0% { stroke-dashoffset: 500; }
+  70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.draw-line {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw 3s ease forwards infinite;
+}
