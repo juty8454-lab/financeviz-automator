@@ -106,9 +106,33 @@ export default function Home() {
 
         {status === "done" && (
           <div className="mt-8">
-            <div className="bg-gray-50 rounded-xl aspect-video flex items-center justify-center text-gray-400 text-sm">
-              Video preview (coming in the next step)
+            <div className="bg-gray-50 rounded-xl aspect-video flex items-center justify-center p-6">
+              <svg viewBox="0 0 300 160" className="w-full">
+                <path
+                  d="M40 130 L40 60 M40 60 L20 80 M40 60 L60 80"
+                  fill="none" stroke="#1a1a1a" strokeWidth="4" strokeLinecap="round"
+                  className="draw-line"
+                />
+                <circle
+                  cx="40" cy="45" r="10" fill="none" stroke="#1a1a1a" strokeWidth="4"
+                  className="draw-line"
+                />
+                <path
+                  d="M100 120 L140 70 L170 95 L220 40"
+                  fill="none" stroke="#e0483f" strokeWidth="4" strokeLinecap="round"
+                  className="draw-line"
+                />
+                <path
+                  d="M220 40 L200 40 M220 40 L220 60"
+                  fill="none" stroke="#e0483f" strokeWidth="4" strokeLinecap="round"
+                  className="draw-line"
+                />
+                <line x1="10" y1="130" x2="270" y2="130" stroke="#e4e4e4" strokeWidth="3" />
+              </svg>
             </div>
+            <p className="text-xs text-gray-400 text-center mt-2">
+              Preview animation — real rendering comes in the next step
+            </p>
             <button
               onClick={() => setStatus("idle")}
               className="mt-4 w-full py-4 rounded-xl border-2 border-gray-900 font-semibold"
@@ -120,4 +144,4 @@ export default function Home() {
       </div>
     </main>
   );
-            }
+}
